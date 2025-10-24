@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User Dashboard</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='styleus.css') }}">
+</head>
+<body>
+<div class="logo">
+    <img src="{{ url_for('static', filename='logo23.png') }}" alt="Logo">
+    <div class="logo-text">
+        <span class="company-name">Big Success Family</span>
+        <span class="tagline">CERTIFIED TRUST</span>
+    </div>
+</div>
+
+<div class="container">
+    <h2>Welcome, {{ username }}!</h2>
+    <p class="welcome-text">“Keep your workflow organized! Press the button to mark your current activity.”</p>
+
+    <form method="POST" class="action-buttons" id="actionForm">
+        <input type="hidden" name="actionBtn" id="hiddenAction" value="">
+
+        <button type="submit" name="actionBtn" value="Start" class="start"
+        {% if clicked_actions['Start'] %}disabled{% endif %}>
+            🟢 Start
+        </button>
+
+        <button type="submit" name="actionBtn" value="Break 15 min" class="break15"
+        {% if clicked_actions['Break 15 min'] or clicked_actions['Break 30 min'] %}disabled{% endif %}>
+            🟡 Break (12:30-01:30)
+        </button>
+
+        <button type="submit" name="actionBtn" value="Break 30 min" class="break30"
+        {% if clicked_actions['Break 15 min'] or clicked_actions['Break 30 min'] %}disabled{% endif %}>
+            🟠 Break (1:30-2:30)
+        </button>
+
+        <button type="submit" name="actionBtn" value="Back at Seat" class="backSeat"
+        {% if clicked_actions['Back at Seat'] %}disabled{% endif %}>
+            ✅ Back at Seat
+        </button>
+
+        <button type="submit" name="actionBtn" value="Leave" class="leave"
+        {% if clicked_actions['Leave'] %}disabled{% endif %}>
+            🔴 Leave
+        </button>
+    </form>
+
+    <div id="messageBox"></div>
+    <a href="{{ url_for('logout') }}" class="logout-link">Logout</a>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("actionForm");
+    const buttons = document.querySelectorAll(".action-buttons button");
+    const msgBox = document.getElementById("messageBox");
+    const welcomeText = document.querySelector(".welcome-text");
+    const hiddenAction = document.getElementById("hiddenAction");
+
+    const messages = {
+        "Start": "🌞 Good Morning! Wishing you a blessed and energetic day ahead. Time to shine! 💪",
+        "Break 15 min": "🟡 Enjoy your break! Relax and recharge. ☕",
+        "Break 30 min": "🟠 Enjoy your break! Take some rest. 🌿",
+        "Back at Seat": "✅ Welcome back! Let’s get back to work. 💼",
+        "Leave": "🔴 Have a great day! See you soon. 👋"
+    };
+
+    buttons.forEach(btn => {
+        btn.addEventListener("click", (event) => {
+            event.preventDefault();
+            const action = btn.value;
+            hiddenAction.value = action;
+
+            // Disable only clicked button
+            btn.disabled = true;
+            btn.style.opacity = "0.5";
+
+            // 1️⃣ Show "Action Recorded!" message
+            const recordMsg = document.createElement("div");
+            recordMsg.className = "message message-recorded";
+            recordMsg.innerText = "✅ Action Recorded!";
+            recordMsg.style.animation = "fadeSlideIn 0.5s ease forwards";
+            msgBox.innerHTML = "";
+            msgBox.appendChild(recordMsg);
+
+            // 2️⃣ After 1.2s, show friendly message
+            setTimeout(() => {
+                recordMsg.remove();
+                const actionMsg = document.createElement("div");
+                actionMsg.className = "message message-action";
+                actionMsg.innerText = messages[action];
+                actionMsg.style.animation = "fadeSlideIn 0.7s ease forwards";
+                msgBox.appendChild(actionMsg);
+            }, 1200);
+		setTimeout(() => {
+                    form.submit();
+              }, 4000);
+            // Dim welcome text during animation
+            welcomeText.classList.add("dimmed");
+            setTimeout(() => {
+                welcomeText.classList.remove("dimmed");
+            }, 2000);
+        });
+    });
+});
+</script>
+</body>
+</html>
+

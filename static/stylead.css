@@ -1,0 +1,202 @@
+/* ===== General Page Setup ===== */
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #121212;
+    color: #fff;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* ===== Main Container ===== */
+.container {
+    width: 85%;
+    max-width: 1100px;
+    background: #1e1e1e;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+    padding: 40px 30px;
+    text-align: center;
+    margin: 80px auto 40px auto; /* push container below logo */
+}
+
+/* ===== Header ===== */
+.container h2 {
+    margin-bottom: 25px;
+    font-size: 30px;
+    color: #FFD700;
+    text-shadow: 0 0 10px rgba(255,215,0,0.7);
+}
+
+/* ===== Logo Section ===== */
+.logo {
+    position: relative; /* scrolls with page */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 20px; /* distance from top-left corner */
+}
+
+.logo img {
+    height: 60px;
+    filter: drop-shadow(0 0 10px rgba(255,215,0,0.8));
+    animation: glow 2s ease-in-out infinite alternate;
+    transition: transform 0.4s ease;
+}
+
+.logo img:hover {
+    transform: scale(1.1);
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* text aligned left of image */
+}
+
+.company-name {
+    font-size: 20px;
+    font-weight: 700;
+    color: #FFD700;
+    text-shadow: 0 0 10px rgba(255,215,0,0.9);
+}
+
+.tagline {
+    font-size: 12px;
+    font-weight: 600;
+    color: #FFD700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* ===== Status Row ===== */
+.status-row {
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 1.1em;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.status-row span {
+    display: inline-block;
+}
+
+/* ===== Table Styling ===== */
+.table-wrapper {
+    overflow-x: auto;
+    margin-bottom: 30px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #2c2c2c;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 14px 16px;
+    text-align: left;
+    border-bottom: 1px solid #333;
+}
+
+th {
+    background: #333;
+    color: #FFD700;
+    font-weight: 600;
+}
+
+tr:nth-child(even) {
+    background: #262626;
+}
+
+tr:hover {
+    background: #383838;
+}
+
+/* ===== Buttons ===== */
+.button-group {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 15px;
+}
+
+/* Download Button */
+.btn-download {
+    background: #28a745;
+    color: #fff;
+}
+.btn-download:hover {
+    background: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+/* Add Employee Button */
+.btn-add {
+    background: #FFD700;
+    color: #000;
+}
+.btn-add:hover {
+    background: #e6c200;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255,215,0,0.3);
+}
+
+/* Logout Button */
+.btn-logout {
+    background: #dc3545;
+    color: #fff;
+}
+.btn-logout:hover {
+    background: #b02a37;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255,0,0,0.3);
+}
+
+/* ===== Glow Animation ===== */
+@keyframes glow {
+    0% { filter: drop-shadow(0 0 5px rgba(255,215,0,0.5)); }
+    100% { filter: drop-shadow(0 0 20px rgba(255,215,0,1)); }
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+        padding: 25px;
+    }
+
+    .btn {
+        width: 100%;
+    }
+
+    .logo img {
+        height: 50px;
+    }
+
+    .company-name {
+        font-size: 18px;
+    }
+
+    .status-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+

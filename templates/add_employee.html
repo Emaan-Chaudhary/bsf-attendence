@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Employee</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylead.css') }}">
+    <style>
+        /* ===== Page Background ===== */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #121212;
+            color: #fff;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* ===== Form Container ===== */
+        .form-container {
+            background: #1e1e1e;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+            width: 350px;
+            text-align: center;
+        }
+
+        .form-container h2 {
+            color: #FFD700;
+            margin-bottom: 25px;
+            font-size: 24px;
+            letter-spacing: 1px;
+        }
+
+        /* ===== Input Fields ===== */
+        input {
+            width: 85%;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 6px;
+            background: #2c2c2c;
+            color: #fff;
+            font-size: 15px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border: 2px solid #FFD700;
+            background: #333;
+        }
+
+        /* ===== Buttons ===== */
+        button {
+            width: 90%;
+            background: #FFD700;
+            color: #000;
+            border: none;
+            padding: 12px;
+            margin-top: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s ease;
+        }
+
+        button:hover {
+            background: #e6c200;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+        }
+
+        /* ===== Message ===== */
+        .msg {
+            margin-top: 15px;
+            color: #FFD700;
+            font-weight: 600;
+        }
+
+        /* ===== Back Link ===== */
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #FFD700;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .back-link:hover {
+            color: #e6c200;
+        }
+
+        /* ===== Logo ===== */
+        .logo {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            height: 60px;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8));
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        .company-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: #FFD700;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.9);
+        }
+
+        .tagline {
+            font-size: 12px;
+            color: #FFD700;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+        }
+
+        @keyframes glow {
+            0% { filter: drop-shadow(0 0 5px rgba(255,215,0,0.4)); }
+            100% { filter: drop-shadow(0 0 20px rgba(255,215,0,1)); }
+        }
+
+        @media (max-width: 480px) {
+            .form-container {
+                width: 85%;
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Logo -->
+    <div class="logo">
+        <img src="{{ url_for('static', filename='logo23.png') }}" alt="Company Logo">
+        <div class="logo-text">
+            <span class="company-name">Big Success Family</span>
+            <span class="tagline">CERTIFIED TRUST</span>
+        </div>
+    </div>
+
+    <!-- Add Employee Form -->
+    <div class="form-container">
+        <h2>➕ Add New Employee</h2>
+        <form method="POST">
+            <input type="text" name="username" placeholder="Enter username" required><br>
+            <input type="password" name="password" placeholder="Enter password" required><br>
+            <button type="submit">Add Employee</button>
+        </form>
+
+        {% if message %}
+            <div class="msg">{{ message }}</div>
+        {% endif %}
+
+        <a href="{{ url_for('admin_logs') }}" class="back-link">⬅️ Back to Admin Dashboard</a>
+    </div>
+</body>
+</html>

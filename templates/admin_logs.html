@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylead.css') }}">
+    <script>
+        // ===== Auto-refresh live status every 5 sec =====
+        function fetchLiveStatus() {
+            fetch("{{ url_for('live_status') }}")
+                .then(response => response.json())
+                .then(data => {
+                    if(!data.error){
+                        document.getElementById("started_count").innerText = data.started;
+                        document.getElementById("break_count").innerText = data.break;
+                        document.getElementById("active_count").innerText = data.active;
+                    }
+                })
+                .catch(err => console.error("Error fetching live status:", err));
+        }
+
+        setInterval(fetchLiveStatus, 5000);
+        window.onload = fetchLiveStatus;
+    </script>
+</head>
+<body>
+
+    <!-- ===== Logo Section ===== -->
+    <div class="logo">
+        <img src="{{ url_for('static', filename='logo23.png') }}" alt="Company Logo">
+        <div class="logo-text">
+            <span class="company-name">Big Success Family</span>
+            <span class="tagline">CERTIFIED TRUST</span>
+        </div>
+    </div>
+
+    <!-- ===== Main Container ===== -->
+    <div class="container">
+        <h2>Admin Dashboard</h2>
+
+        <!-- ===== Live Status Row ===== -->
+        <div class="status-row">
+            <span>👥 Total: <span id="total_employees">29</span></span>
+            <span>✅ Present: <span id="started_count">{{ started_count }}</span></span>
+            <span>💤 Break: <span id="break_count">{{ break_count }}</span></span>
+            <span>🟢 Active: <span id="active_count">{{ active_count }}</span></span>
+        </div>
+
+        <!-- ===== Logs Table ===== -->
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Actions (with timestamp)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for log in logs %}
+                    <tr>
+                        <td>{{ log.username }}</td>
+                        <td>
+                            {% if log.start_time %}
+                                ✅ Start: {{ log.start_time }}<br>
+                            {% endif %}
+                            {% if log.break_time %}
+                                💤 Break: {{ log.break_time }}<br>
+                            {% endif %}
+                            {% if log.onseat_time %}
+                                🪑 Onseat: {{ log.onseat_time }}<br>
+                            {% endif %}
+                            {% if log.leave_time %}
+                                🚪 Leave: {{ log.leave_time }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ===== Button Section ===== -->
+        <div class="button-group">
+            <form method="GET" action="{{ url_for('download_logs') }}" style="display:inline;">
+                <button type="submit" class="btn btn-download">⬇️ Download Excel</button>
+            </form>
+
+            <a href="{{ url_for('add_employee') }}">
+                <button class="btn btn-add">➕ Add Employee</button>
+            </a>
+
+            <a href="{{ url_for('logout') }}">
+                <button class="btn btn-logout">🚪 Logout</button>
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>
+
